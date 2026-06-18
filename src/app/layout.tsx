@@ -1,9 +1,11 @@
+import './globals.css'
+
 import type { Metadata } from 'next'
 import { Schibsted_Grotesk } from 'next/font/google'
 import { Toaster } from 'sonner'
-import './globals.css'
-import { ThemeProvider } from '@/providers/theme-provider'
+
 import { QueryProvider } from '@/providers/query-provider'
+import { ThemeProvider } from '@/providers/theme-provider'
 
 const schibsted = Schibsted_Grotesk({
   subsets: ['latin'],

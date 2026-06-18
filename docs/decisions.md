@@ -12,6 +12,10 @@ Log das decisões de definição. Formato: contexto → decisão → motivo. Mai
 **Decisão:** código + comentários em inglês; docs externas, commits e copy de UI em PT-BR.
 **Motivo:** regra definida do projeto.
 
+### D-011 · Componentização plana (index + parts)
+**Decisão:** componente não-trivial vira pasta plana `components/<nome>/` com `index.tsx` (composição/smart) e `parts.tsx` (peças puras + constants); lógica em `use-*.ts` só se crescer. Sem camada `features/`, sem `ui/`/`model/`, sem `index.ts` de re-export. `theme-toggle/` é a referência.
+**Motivo:** separa composição de peças puras sem cerimônia. Uma primeira versão DDD-lite (ui/model/index) foi considerada complexa demais e simplificada.
+
 ### D-008 · Tema com toggle dark/light (next-themes)
 **Decisão:** suportar dark **e** light via next-themes (toggle). Dark = tokens Plann.er; light = paleta derivada (ver `exploration`/`plan` da Fase 1).
 **Motivo:** escolha do usuário; diferencial de UX/a11y. Implica criar tokens light (o style guide não os define) — resolvido antes do `plan`.

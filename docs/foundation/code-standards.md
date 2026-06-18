@@ -9,9 +9,20 @@ Herdados das convenções do Turnora e das regras transversais do autor. SSOT pa
 
 ## Componentes
 
-- shadcn/ui em `components/ui` (primitivas); composições de produto em `components/features`.
+- `components/ui`: primitivas **puras** compartilhadas (shadcn + custom reutilizável).
+- `components/<componente>/`: pasta por componente não-trivial, **plana**:
+  - `index.tsx` — **composição** (smart: hooks, orquestração, estado); dá o import limpo `@/components/<componente>`.
+  - `parts.tsx` — **peças puras** (só props) + `constants` locais.
+  - `use-*.ts` — só se a lógica crescer (senão fica inline no `index.tsx`).
+- Componente trivial = arquivo único `components/<nome>.tsx`.
+- Sem camada `features/`, sem subpastas `ui/`/`model/`, sem `index.ts` de re-export. Ver `theme-toggle/` como referência.
 - Variantes com `class-variance-authority`; merge de classes com `cn()` (clsx + tailwind-merge).
-- Um componente por arquivo; nome do arquivo = nome do componente (PascalCase).
+
+## Nomenclatura
+
+- **Arquivos e pastas:** `kebab-case` (`event-card.tsx`, `use-events.ts`). Nunca camelCase/PascalCase no nome do arquivo.
+- **Variáveis e funções:** `camelCase`. **Componentes, tipos e classes:** `PascalCase`.
+- **Campos da API:** mantêm o `snake_case` do payload; o mapeamento para o domínio acontece em `lib/api`.
 
 ## Clean code e concisão
 
@@ -51,7 +62,13 @@ Norte: **simplicidade, experiência, senioridade.** Do básico ao avançado.
 - Regras de negócio vivem em `lib/domain` (funções puras, testáveis), não espalhadas em componentes.
 - Hooks de dados (`hooks/`) encapsulam React Query; componentes consomem hooks, não o client.
 
+## Dependências
+
+- **Nunca usar versões beta/prerelease/RC.** Sempre a última **estável**.
+- Ex.: json-server → `0.17.4` (a linha v1 só existe como beta).
+
 ## Qualidade
 
 - ESLint + Prettier (config herdada do Turnora). `tsc --noEmit` limpo antes de commitar.
+- Imports/exports ordenados automaticamente via `eslint-plugin-simple-import-sort` (`pnpm lint --fix`).
 - Testes relevantes em Vitest: regras de domínio, render de estados, interação de check-in.

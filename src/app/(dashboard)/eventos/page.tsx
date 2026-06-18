@@ -1,8 +1,9 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
 import { CalendarClock } from 'lucide-react'
-import { ThemeToggle } from '@/components/features/theme-toggle'
+import { motion, useReducedMotion } from 'motion/react'
+
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function EventosPage() {
   const reduceMotion = useReducedMotion()
