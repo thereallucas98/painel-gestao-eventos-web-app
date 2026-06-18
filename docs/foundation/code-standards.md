@@ -13,6 +13,30 @@ Herdados das convenções do Turnora e das regras transversais do autor. SSOT pa
 - Variantes com `class-variance-authority`; merge de classes com `cn()` (clsx + tailwind-merge).
 - Um componente por arquivo; nome do arquivo = nome do componente (PascalCase).
 
+## Clean code e concisão
+
+Norte: **simplicidade, experiência, senioridade.** Do básico ao avançado.
+
+- Funções pequenas e puras; nomes reveladores; sem comentários do óbvio; composição sobre repetição.
+- **Concisão com null/undefined** (evitar a verbosidade típica de código gerado):
+  - Use `?.` (optional chaining) e `??` (nullish coalescing) em vez de `x !== null && x !== undefined`.
+  - Use early return e guard clauses; defaults em parâmetros/destructuring.
+  - Para listas/strings, prefira `if (!items.length)` a comparar com `undefined`.
+  - Compare explicitamente com `null`/`undefined` **só** quando a distinção entre os dois importar (caso raro) — e comente o porquê.
+- Sem código morto, sem flags não usadas, sem abstração prematura.
+
+## Animações e UX
+
+- **Polish é requisito**, não enfeite: transições e animações suaves em navegação, estados (loading→conteúdo), entrada/saída de listas e overlays, hover/press.
+- Layout animations onde agregar (reordenação, expand/collapse, sheet↔modal).
+- Sempre respeitar `prefers-reduced-motion` (degradar para sem animação).
+- Microinterações com feedback imediato; nada de salto/flicker de layout.
+
+## Idioma
+
+- **Código e comentários:** inglês (identificadores, JSDoc, mensagens de log internas).
+- **Docs externas** (README, `docs/`, decisions, tasks), **mensagens de commit** e **copy de UI:** PT-BR.
+
 ## Regras transversais (invioláveis)
 
 - **Ícones:** sempre `lucide-react`. **Nunca emoji** como ícone de UI.

@@ -6,7 +6,7 @@ Status: ☐ pendente · ◐ em andamento · ☑ concluída.
 | # | Fase | Entregáveis | Commit |
 |---|---|---|---|
 | 0 | ☑ Fundação | CLAUDE.md, `docs/foundation`, `docs/decisions.md`, ROADMAP, init git | `chore: fundação do projeto e documentação base` |
-| 1 | ☐ Scaffold | Next app único, Tailwind v4 + tokens Plann.er, shadcn base, providers, tema dark | `chore(scaffold): app next, tailwind e tema base` |
+| 1 | ☑ Scaffold | Next app único, Tailwind v4 + tokens Plann.er, shadcn base, providers, tema dark | `chore(scaffold): app next, tailwind e tema base` |
 | 2 | ☐ Camada de dados | `types`, `lib/api`, hooks React Query, setup json-server + `db.json` | `feat(dados): client de api, tipos e hooks` |
 | 3 | ☐ Listagem | lista de eventos, busca (debounce), filtro por status, ordenação por data, estados loading/vazio/erro | `feat(listagem): eventos com busca, filtro e estados` |
 | 4 | ☐ Dashboard | detalhe do evento: 4 cards de métrica, gráfico, tabela de participantes | `feat(dashboard): métricas, gráfico e participantes` |

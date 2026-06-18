@@ -4,6 +4,26 @@ Log das decisões de definição. Formato: contexto → decisão → motivo. Mai
 
 ## 2026-06-18
 
+### D-010 · Biblioteca de animação — motion + tailwindcss-animate
+**Decisão:** `motion` (sucessor do framer-motion) para layout animations/gestos/orquestração + `tailwindcss-animate` para microinterações CSS. Instaladas no scaffold; aplicadas por fase. Sempre com `prefers-reduced-motion`.
+**Motivo:** o polish pedido exige do micro ao avançado; conjunto já exercitado no Turnora.
+
+### D-009 · Política de idioma
+**Decisão:** código + comentários em inglês; docs externas, commits e copy de UI em PT-BR.
+**Motivo:** regra definida do projeto.
+
+### D-008 · Tema com toggle dark/light (next-themes)
+**Decisão:** suportar dark **e** light via next-themes (toggle). Dark = tokens Plann.er; light = paleta derivada (ver `exploration`/`plan` da Fase 1).
+**Motivo:** escolha do usuário; diferencial de UX/a11y. Implica criar tokens light (o style guide não os define) — resolvido antes do `plan`.
+
+### D-007 · Package manager — pnpm
+**Decisão:** usar pnpm (app único, sem workspace).
+**Motivo:** escolha do usuário; consistente com o Turnora. README documentará `pnpm install`/`pnpm dev`.
+
+### D-006 · Responsividade mobile-first + bottom sheet/modal
+**Decisão:** abordagem **mobile → tablet → desktop** (mobile-first). Interações com overlay usam **bottom sheet no mobile** e **modal no desktop/tablet**, via um componente adaptativo único que troca por breakpoint.
+**Motivo:** o enunciado exige mobile (cards empilhados, ações acessíveis) e desktop (tabelas expandidas). Bottom sheet é o padrão nativo de ação em mobile; modal em telas maiores. Um wrapper adaptativo evita duplicar lógica.
+
 ### D-005 · Fundação Arché vendada no repo
 **Decisão:** vendar specs condensadas em `docs/foundation/` (princípios + modos); CLAUDE.md referencia.
 **Motivo:** Arché não está instalado como plugin local; repo entregue precisa ser self-contained (SSOT interno), sem dependência externa. Mostra processo ao avaliador.

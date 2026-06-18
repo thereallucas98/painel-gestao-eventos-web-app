@@ -18,13 +18,27 @@ Resumo dos eixos (detalhe na fonte):
 
 Modos cognitivos (ver [`docs/foundation/arche.md`](docs/foundation/arche.md)): EXPLORING → RESEARCHING → PLANNING → IMPLEMENTING. Cada transição exige sinal explícito do usuário.
 
-**Gate de definição (regra do projeto):** ao chegar num ponto de decisão arquitetural/de produto:
-1. Apresente o contexto.
-2. Liste opções com trade-offs.
-3. Dê uma recomendação.
-4. Documente a decisão em [`docs/decisions.md`](docs/decisions.md) após o aceite.
+### Ciclo por fase/task
 
-Humano no loop nos gates; autonomia dentro de uma fase aprovada.
+Cada fase do roadmap roda este pipeline, documentado em `docs/tasks/<fase>/` (ver [`docs/tasks/README.md`](docs/tasks/README.md)):
+
+1. **brief** — objetivo e escopo
+2. **research** — fatos relevantes (API, libs, dados)
+3. **exploration** — opções e trade-offs
+4. **plan** — abordagem escolhida
+5. **todo** — checklist de execução
+6. **validation** — critérios de pronto + roteiro de QA
+
+Regras invioláveis:
+
+- **Sem perguntas em aberto nas docs.** Dúvida de regra de negócio *ou* de código → perguntar ANTES de escrever. Docs nascem resolvidas.
+- Só depois das docs aprovadas → **código**.
+- Após o código → **QA passo a passo, um passo de cada vez**; não enviar o próximo sem o usuário solicitar.
+- **Commit só após revisão e aprovação final do usuário.** Nunca commitar sem o "ok" explícito.
+
+**Gate de definição:** ao chegar num ponto de decisão — apresente contexto → liste opções com trade-offs → recomende → documente em [`docs/decisions.md`](docs/decisions.md) após o aceite.
+
+Humano no loop em todos os gates.
 
 ## 3. Stack e decisões-chave
 
