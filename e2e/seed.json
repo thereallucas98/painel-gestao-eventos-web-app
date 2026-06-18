@@ -1,0 +1,35 @@
+{
+  "events": [
+    {
+      "id": "EVT-TEST",
+      "name": "Evento Teste",
+      "date": "2025-05-15T09:00:00-03:00",
+      "location": "São Paulo",
+      "status": "active",
+      "description": "Evento usado pelos testes e2e.",
+      "expected_count": 2,
+      "checkin_count": 0,
+      "error_count": 0,
+      "entry_rate": 0
+    }
+  ],
+  "participants": [
+    {
+      "id": "P1",
+      "event_id": "EVT-TEST",
+      "name": "Ana Normal",
+      "type": "normal",
+      "status": "outside",
+      "checkin_count": 0
+    },
+    {
+      "id": "P2",
+      "event_id": "EVT-TEST",
+      "name": "Bea Repetida",
+      "type": "normal",
+      "status": "outside",
+      "checkin_count": 1
+    }
+  ],
+  "checkins": []
+}
