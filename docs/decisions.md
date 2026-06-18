@@ -12,6 +12,10 @@ Log das decisões de definição. Formato: contexto → decisão → motivo. Mai
 **Decisão:** código + comentários em inglês; docs externas, commits e copy de UI em PT-BR.
 **Motivo:** regra definida do projeto.
 
+### D-014 · Confirmação do check-in via credencial ("cartão de embarque")
+**Decisão:** check-in/saída não é instantâneo no clique; tocar no participante abre um `ResponsiveDialog` com a **Credencial** (rótulo "Credencial"; visual estilo boarding pass: nome, evento, data, local, classe VIP/Normal, status, código + barcode decorativo) e o botão **Confirmar**. Regra bloqueada → botão desabilitado + motivo. Une a trava de confirmação ao diferencial visual. Versão limpa agora; refinar ao ler o frame Figma `1-642`.
+**Motivo:** evitar check-in acidental (ação que persiste e, p/ Normal, sem desfazer) + entregar o diferencial.
+
 ### D-013 · Rebrand laranja + fontes Exo/Saira (supera D-001/D-008)
 **Decisão:** marca passa de lime/dark (Plann.er) para **laranja `#ff7437`**, **light-first**. Paleta do usuário mapeada para o vocabulário shadcn nos dois temas (`globals.css`). Fontes: **Exo** em títulos (`font-display`) + **Saira** no corpo (`font-sans`), variáveis via next/font. Tema default **light** com toggle mantido. **Status "Ativo" = laranja (brand)** (escolha do usuário); "cancelado" vermelho, "encerrado" neutro. **Botões primary** = `#d84a0c` (orange-red) + texto **branco** (AA); o brand `#ff7437` fica nos accents/tints. Extra `--midnight` (#002838) disponível.
 **Motivo:** nova identidade visual do usuário. Supera as cores do D-001/D-008 e a fonte Schibsted.

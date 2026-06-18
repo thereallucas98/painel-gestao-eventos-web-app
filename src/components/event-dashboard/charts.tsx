@@ -84,7 +84,7 @@ export function EntriesAreaChart({ data }: { data: TimePoint[] }) {
 }
 
 const occupancyConfig = {
-  value: { label: 'Dentro', color: 'var(--midnight)' },
+  value: { label: 'Dentro', color: 'var(--brand-strong)' },
 } satisfies ChartConfig
 
 export function OccupancyLineChart({ data }: { data: TimePoint[] }) {

@@ -1,8 +1,10 @@
 'use client'
 
 import { Percent, TicketCheck, TriangleAlert, Users } from 'lucide-react'
+import { useState } from 'react'
 
 import { MetricCard } from '@/components/metric-card'
+import { useCheckin } from '@/hooks/use-checkin'
 import { useCheckins } from '@/hooks/use-checkins'
 import { useEvent } from '@/hooks/use-event'
 import { useParticipants } from '@/hooks/use-participants'
@@ -13,6 +15,7 @@ import {
   occupancyOverTime,
   successErrorCounts,
 } from '@/lib/event-metrics'
+import type { Participant } from '@/types/participant'
 
 import {
   AttendanceRadial,
@@ -20,7 +23,9 @@ import {
   OccupancyLineChart,
   SuccessErrorDonut,
 } from './charts'
+import { ParticipantCredentialDialog } from './credential-dialog'
 import {
+  CheckinBanner,
   DashboardError,
   DashboardSkeleton,
   EventHeader,
@@ -32,6 +37,8 @@ export function EventDashboard({ eventId }: { eventId: string }) {
   const eventQuery = useEvent(eventId)
   const participantsQuery = useParticipants(eventId)
   const checkinsQuery = useCheckins(eventId)
+  const { checkin, pendingId } = useCheckin(eventId)
+  const [selected, setSelected] = useState<Participant | null>(null)
 
   if (eventQuery.isLoading) return <DashboardSkeleton />
 
@@ -53,6 +60,8 @@ export function EventDashboard({ eventId }: { eventId: string }) {
   return (
     <div className="flex flex-col gap-6">
       <EventHeader event={event} />
+
+      {event.status !== 'active' && <CheckinBanner status={event.status} />}
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <MetricCard
@@ -88,7 +97,20 @@ export function EventDashboard({ eventId }: { eventId: string }) {
         <SuccessErrorDonut success={io.success} error={io.error} />
       </div>
 
-      <ParticipantsPanel participants={participants} />
+      <ParticipantsPanel participants={participants} onSelect={setSelected} />
+
+      <ParticipantCredentialDialog
+        event={event}
+        participant={selected}
+        pending={pendingId === selected?.id}
+        onOpenChange={(open) => {
+          if (!open) setSelected(null)
+        }}
+        onConfirm={(action) => {
+          if (selected) checkin(event, selected, action)
+          setSelected(null)
+        }}
+      />
     </div>
   )
 }

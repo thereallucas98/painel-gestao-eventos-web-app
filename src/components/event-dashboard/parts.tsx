@@ -1,4 +1,10 @@
-import { ArrowLeft, CalendarDays, MapPin } from 'lucide-react'
+import {
+  ArrowLeft,
+  CalendarDays,
+  ChevronRight,
+  Lock,
+  MapPin,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import { StatusBadge } from '@/components/status-badge'
@@ -19,6 +25,10 @@ import { participantStatusLabel, participantTypeLabel } from '@/lib/i18n-enums'
 import { cn } from '@/lib/utils'
 import type { Event } from '@/types/event'
 import type { Participant } from '@/types/participant'
+
+interface SelectProps {
+  onSelect: (participant: Participant) => void
+}
 
 export function EventHeader({ event }: { event: Event }) {
   return (
@@ -49,7 +59,20 @@ export function EventHeader({ event }: { event: Event }) {
   )
 }
 
-function TypeBadge({ type }: { type: Participant['type'] }) {
+export function CheckinBanner({ status }: { status: Event['status'] }) {
+  const message =
+    status === 'cancelled'
+      ? 'Evento cancelado — check-ins bloqueados.'
+      : 'Evento encerrado — check-ins bloqueados.'
+  return (
+    <div className="border-border bg-secondary text-muted-foreground flex items-center gap-2 rounded-xl border px-4 py-3 text-sm">
+      <Lock className="size-4 shrink-0" />
+      {message}
+    </div>
+  )
+}
+
+export function TypeBadge({ type }: { type: Participant['type'] }) {
   return (
     <Badge
       variant="outline"
@@ -64,7 +87,11 @@ function TypeBadge({ type }: { type: Participant['type'] }) {
   )
 }
 
-function ParticipantStatus({ status }: { status: Participant['status'] }) {
+export function ParticipantStatus({
+  status,
+}: {
+  status: Participant['status']
+}) {
   return (
     <span className="flex items-center gap-1.5 text-sm">
       <span
@@ -78,7 +105,10 @@ function ParticipantStatus({ status }: { status: Participant['status'] }) {
   )
 }
 
-function ParticipantTable({ participants }: { participants: Participant[] }) {
+function ParticipantTable({
+  participants,
+  onSelect,
+}: { participants: Participant[] } & SelectProps) {
   return (
     <Table>
       <TableHeader className="bg-card sticky top-0 z-10">
@@ -87,11 +117,16 @@ function ParticipantTable({ participants }: { participants: Participant[] }) {
           <TableHead>Tipo</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="text-right">Check-ins</TableHead>
+          <TableHead className="w-0" />
         </TableRow>
       </TableHeader>
       <TableBody>
         {participants.map((p) => (
-          <TableRow key={p.id}>
+          <TableRow
+            key={p.id}
+            onClick={() => onSelect(p)}
+            className="hover:bg-accent/40 cursor-pointer"
+          >
             <TableCell className="font-medium">{p.name}</TableCell>
             <TableCell>
               <TypeBadge type={p.type} />
@@ -102,6 +137,15 @@ function ParticipantTable({ participants }: { participants: Participant[] }) {
             <TableCell className="text-right tabular-nums">
               {p.checkinCount}
             </TableCell>
+            <TableCell className="text-right">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label={`Abrir credencial de ${p.name}`}
+              >
+                <ChevronRight className="size-4" />
+              </Button>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -109,20 +153,28 @@ function ParticipantTable({ participants }: { participants: Participant[] }) {
   )
 }
 
-function ParticipantCards({ participants }: { participants: Participant[] }) {
+function ParticipantCards({
+  participants,
+  onSelect,
+}: { participants: Participant[] } & SelectProps) {
   return (
     <div className="flex flex-col gap-3">
       {participants.map((p) => (
-        <div
+        <button
           key={p.id}
-          className="bg-secondary border-border flex items-center justify-between gap-3 rounded-xl border p-4"
+          type="button"
+          onClick={() => onSelect(p)}
+          className="bg-secondary border-border hover:bg-accent/40 flex items-center justify-between gap-3 rounded-xl border p-4 text-left transition-colors"
         >
           <div className="flex flex-col gap-1">
             <span className="font-medium">{p.name}</span>
             <ParticipantStatus status={p.status} />
           </div>
-          <TypeBadge type={p.type} />
-        </div>
+          <div className="flex items-center gap-2">
+            <TypeBadge type={p.type} />
+            <ChevronRight className="text-muted-foreground size-4" />
+          </div>
+        </button>
       ))}
     </div>
   )
@@ -132,9 +184,8 @@ const PARTICIPANTS_SCROLL_THRESHOLD = 10
 
 export function ParticipantsPanel({
   participants,
-}: {
-  participants: Participant[]
-}) {
+  onSelect,
+}: { participants: Participant[] } & SelectProps) {
   if (!participants.length) {
     return (
       <section className="flex flex-col gap-3">
@@ -158,20 +209,20 @@ export function ParticipantsPanel({
       <div className="hidden md:block">
         {scrolls ? (
           <ScrollArea type="always" className="h-[32rem]">
-            <ParticipantTable participants={participants} />
+            <ParticipantTable participants={participants} onSelect={onSelect} />
           </ScrollArea>
         ) : (
-          <ParticipantTable participants={participants} />
+          <ParticipantTable participants={participants} onSelect={onSelect} />
         )}
       </div>
 
       <div className="md:hidden">
         {scrolls ? (
           <ScrollArea type="always" className="h-[28rem] pr-2">
-            <ParticipantCards participants={participants} />
+            <ParticipantCards participants={participants} onSelect={onSelect} />
           </ScrollArea>
         ) : (
-          <ParticipantCards participants={participants} />
+          <ParticipantCards participants={participants} onSelect={onSelect} />
         )}
       </div>
     </section>

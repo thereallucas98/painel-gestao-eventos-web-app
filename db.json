@@ -427,8 +427,8 @@
       "event_id": "EVT-005",
       "name": "Camila Pereira",
       "type": "vip",
-      "status": "outside",
-      "checkin_count": 4
+      "status": "inside",
+      "checkin_count": 5
     },
     {
       "id": "EVT-005-P002",
@@ -1312,6 +1312,15 @@
       "success": true,
       "action": "exit",
       "error_reason": null
+    },
+    {
+      "event_id": "EVT-005",
+      "participant_id": "EVT-005-P001",
+      "timestamp": "2026-06-18T21:57:44.010Z",
+      "success": true,
+      "action": "entry",
+      "error_reason": null,
+      "id": "F7b4GUq"
     }
   ]
 }
