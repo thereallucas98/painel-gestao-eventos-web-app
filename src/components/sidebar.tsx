@@ -17,7 +17,7 @@ export function Sidebar({ nav, footer, className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        'bg-background hidden w-24 shrink-0 flex-col items-center gap-8 py-6 md:flex',
+        'bg-background hidden w-28 shrink-0 flex-col items-center gap-8 py-6 md:flex',
         className,
       )}
     >

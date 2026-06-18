@@ -13,7 +13,7 @@ export function AppShell({ sidebar, children, className }: AppShellProps) {
   return (
     <div className={cn('bg-background flex min-h-dvh', className)}>
       {sidebar}
-      <main className="min-w-0 flex-1">{children}</main>
+      <main className="flex min-w-0 flex-1 flex-col">{children}</main>
     </div>
   )
 }
