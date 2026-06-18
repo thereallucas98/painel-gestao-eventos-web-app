@@ -12,12 +12,17 @@ interface SearchFieldProps extends ComponentProps<'input'> {
 export function SearchField({
   containerClassName,
   className,
+  'aria-label': ariaLabel,
   ...props
 }: SearchFieldProps) {
   return (
     <div className={cn('relative', containerClassName)}>
       <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-      <Input className={cn('pl-9', className)} {...props} />
+      <Input
+        aria-label={ariaLabel ?? 'Buscar'}
+        className={cn('pl-9', className)}
+        {...props}
+      />
     </div>
   )
 }

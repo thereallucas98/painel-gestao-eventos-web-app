@@ -4,7 +4,7 @@ import { CalendarCheck, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { cn } from '@/lib/utils'
+import { cn, focusRing } from '@/lib/utils'
 
 const ITEMS = [
   { href: '/eventos', label: 'Eventos', icon: CalendarCheck },
@@ -26,6 +26,7 @@ export function SidebarNav() {
             aria-label={label}
             aria-current={active ? 'page' : undefined}
             className={cn(
+              focusRing,
               'flex size-12 items-center justify-center rounded-2xl transition-colors',
               active
                 ? 'bg-brand/15 text-brand-strong dark:text-brand'

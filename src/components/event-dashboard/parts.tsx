@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table'
 import { formatEventDate } from '@/lib/date'
 import { participantStatusLabel, participantTypeLabel } from '@/lib/i18n-enums'
-import { cn } from '@/lib/utils'
+import { cn, focusRing } from '@/lib/utils'
 import type { Event } from '@/types/event'
 import type { Participant } from '@/types/participant'
 
@@ -164,7 +164,10 @@ function ParticipantCards({
           key={p.id}
           type="button"
           onClick={() => onSelect(p)}
-          className="bg-secondary border-border hover:bg-accent/40 flex items-center justify-between gap-3 rounded-xl border p-4 text-left transition-colors"
+          className={cn(
+            'bg-secondary border-border hover:bg-accent/40 flex items-center justify-between gap-3 rounded-xl border p-4 text-left transition-colors',
+            focusRing,
+          )}
         >
           <div className="flex flex-col gap-1">
             <span className="font-medium">{p.name}</span>

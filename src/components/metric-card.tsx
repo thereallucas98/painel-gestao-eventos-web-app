@@ -30,16 +30,21 @@ export function MetricCard({
   return (
     <div
       className={cn(
-        'bg-secondary border-border flex flex-col gap-2 rounded-2xl border p-5',
+        'bg-secondary border-border flex min-w-0 flex-col gap-2 rounded-2xl border p-4 sm:p-5',
         className,
       )}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-muted-foreground text-sm">{label}</span>
+        <span className="text-muted-foreground text-xs sm:text-sm">
+          {label}
+        </span>
         <Icon className={cn('size-5', accentText[accent])} />
       </div>
       <span
-        className={cn('font-display text-3xl font-bold', accentText[accent])}
+        className={cn(
+          'font-display text-2xl font-bold sm:text-3xl',
+          accentText[accent],
+        )}
       >
         {value}
       </span>

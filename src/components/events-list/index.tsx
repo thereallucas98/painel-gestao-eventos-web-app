@@ -93,7 +93,7 @@ export function EventsList() {
               placeholder="Buscar por nome"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              containerClassName="w-full sm:w-64"
+              containerClassName="min-w-0 flex-1 sm:w-64 sm:flex-none"
             />
             <SortToggle
               dir={sortDir}

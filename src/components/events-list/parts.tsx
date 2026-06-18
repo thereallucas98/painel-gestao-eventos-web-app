@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/table'
 import { formatEventDate } from '@/lib/date'
 import { type EventStatus, eventStatusLabel } from '@/lib/i18n-enums'
-import { cn } from '@/lib/utils'
+import { cn, focusRing } from '@/lib/utils'
 import type { Event } from '@/types/event'
 
 export type StatusFilterValue = 'all' | EventStatus
@@ -49,9 +49,11 @@ export function StatusFilter({
         <button
           key={opt.value}
           type="button"
+          aria-pressed={value === opt.value}
           onClick={() => onChange(opt.value)}
           className={cn(
             'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+            focusRing,
             value === opt.value
               ? 'bg-primary text-primary-foreground'
               : 'text-muted-foreground hover:text-foreground',

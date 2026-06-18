@@ -33,7 +33,7 @@ function ChartPanel({
   children: ReactNode
 }) {
   return (
-    <section className="bg-secondary border-border flex flex-col gap-3 rounded-2xl border p-5">
+    <section className="bg-secondary border-border flex min-w-0 flex-col gap-3 overflow-hidden rounded-2xl border p-5">
       <h3 className="text-sm font-semibold">{title}</h3>
       {children}
     </section>
@@ -125,7 +125,7 @@ const attendanceConfig = {
 export function AttendanceRadial({ ratePct }: { ratePct: number }) {
   return (
     <ChartPanel title="Comparecimento">
-      <div className="relative mx-auto aspect-square h-[220px]">
+      <div className="relative mx-auto aspect-square w-full max-w-[220px]">
         <ChartContainer config={attendanceConfig} className="h-full w-full">
           <RadialBarChart
             data={[{ value: ratePct }]}
@@ -144,7 +144,9 @@ export function AttendanceRadial({ ratePct }: { ratePct: number }) {
           </RadialBarChart>
         </ChartContainer>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-display text-3xl font-bold">{ratePct}%</span>
+          <span className="font-display text-2xl font-bold sm:text-3xl">
+            {ratePct}%
+          </span>
           <span className="text-muted-foreground text-xs">presença</span>
         </div>
       </div>

@@ -12,7 +12,7 @@ Status: ☐ pendente · ◐ em andamento · ☑ concluída.
 | 3 | ☑ Listagem | lista de eventos, busca (debounce), filtro por status, ordenação por data, estados loading/vazio/erro | `feat(listagem): eventos com busca, filtro e estados` |
 | 4 | ☑ Dashboard | detalhe do evento: 4 cards de métrica, gráfico, tabela de participantes | `feat(dashboard): métricas, gráfico e participantes` |
 | 5 | ☑ Regras + Check-in | `lib/domain` (VIP/Normal/encerrado), mutações otimistas, feedback via toasts | `feat(check-in): regras de negócio e interações` |
-| 6 | ☐ Responsivo + a11y | layout mobile (cards empilhados), ARIA, navegação por teclado, contraste | `feat(ux): responsividade e acessibilidade` |
+| 6 | ☑ Responsivo + a11y | layout mobile (cards empilhados), ARIA, navegação por teclado, contraste | `feat(ux): responsividade e acessibilidade` |
 | 7 | ☐ Testes | Vitest: regra VIP×Normal, render de estados, interação de check-in | `test: regras, estados e check-in` |
 | 8 | ☐ README | instruções, decisões, melhorias futuras, uso de IA | `docs: readme completo de entrega` |
 
