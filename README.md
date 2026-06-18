@@ -1,36 +1,150 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Painel de Gestão de Eventos
 
-## Getting Started
+Painel para acompanhar eventos e controlar o acesso de participantes (check-in/saída), com um dashboard de métricas e regras de negócio. Front-end em **Next.js / React**.
 
-First, run the development server:
+> Teste técnico Front-End. Listagem de eventos → dashboard do evento → check-in com regras (VIP / Normal / evento encerrado).
+
+---
+
+## Stack
+
+| Camada | Tecnologia |
+|---|---|
+| Framework | **Next.js 16** (App Router) · **React 19** · TypeScript (strict) |
+| UI | **Tailwind v4** + **shadcn/ui** (Radix) · `lucide-react` · `sonner` (toasts) · `next-themes` |
+| Animação | `motion` (framer-motion) — com `prefers-reduced-motion` |
+| Estado/dados | **TanStack React Query** (server state + mutações otimistas) |
+| HTTP | `axios` (instância isolada em `lib/api`) |
+| Gráficos | `recharts` (via wrapper `chart` do shadcn) |
+| Datas | `date-fns` (pt-BR) |
+| API (mock) | **json-server** (Opção B — CRUD real, persiste) |
+| Testes | **Vitest** (regras) · **Playwright** (e2e) |
+| Tooling | ESLint + Prettier + `simple-import-sort` · pnpm |
+
+Tipografia: **Exo** (títulos) + **Saira** (corpo). Tema **claro/escuro** com seletor.
+
+---
+
+## Como rodar
+
+Pré-requisitos: **Node ≥ 18** e **pnpm**.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env          # NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Suba os dois serviços (terminais separados):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm api      # json-server (API)  → http://localhost:3001
+pnpm dev      # aplicação (Next)   → http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Acesse **http://localhost:3000** (redireciona para `/eventos`).
 
-## Learn More
+### Testes
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm test                      # Vitest (regras de negócio)
+pnpm test:e2e:install          # baixa o navegador (1ª vez)
+pnpm test:e2e                  # Playwright (estados + check-in) — sobe a API/app sozinho
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Funcionalidades
 
-## Deploy on Vercel
+- **Listagem** (`/eventos`): nome, data, local, status, participantes esperados — com **busca por nome (debounce)**, **filtro por status**, **ordenação por data** e estados **loading / vazio / sem-resultado / erro** (com retry). Tabela no desktop, cards no mobile.
+- **Dashboard** (`/eventos/[id]`): 4 cards de métrica (esperados, check-ins, erros, taxa de entrada), **4 gráficos** (entradas acumuladas, ocupação no tempo, comparecimento, sucesso × erro) e a **lista de participantes** com scroll.
+- **Check-in / saída** com **regras de negócio** e **confirmação** (credencial do participante) + feedback (toasts); persiste no json-server (mutação otimista).
+- **Configurações** (`/configuracoes`): perfil (mock) + seletor de tema.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Regras de negócio
+
+Centralizadas e puras em **`src/lib/domain/checkin.ts`** (testadas):
+
+- **Evento `closed`/`cancelled`** → bloqueia entradas (motivo exibido).
+- **VIP** → entra e sai múltiplas vezes (presença não é recontada na reentrada).
+- **Normal** → apenas **um** check-in; nova tentativa → erro claro.
+
+---
+
+## Arquitetura / estrutura
+
+```
+src/
+  app/(dashboard)/eventos · eventos/[id] · configuracoes   # rotas (App Router)
+  components/                # design system + features (convenção "plana": index + parts)
+    ui/                      # primitivas shadcn
+  hooks/                     # React Query (use-events, use-event, use-checkin…) + use-debounce
+  lib/
+    api/                     # axios client + DTOs (snake) + mappers → domínio (camel)
+    domain/checkin.ts        # regras puras (testáveis)
+    event-metrics.ts         # derivações dos gráficos (puras)
+    date · i18n-enums · utils
+  types/                     # tipos de domínio
+e2e/                         # Playwright (+ seed de teste)
+docs/                        # decisões (ADR), foundation e tasks por fase
+```
+
+**Princípios:** a UI nunca chama `fetch`/axios direto (sempre via `lib/api`); regras de negócio isoladas em `lib/domain`; tipos de API (`snake_case`) mapeados para o domínio (`camelCase`) na fronteira.
+
+---
+
+## Decisões técnicas (resumo)
+
+> Histórico completo (ADR) em [`docs/decisions.md`](docs/decisions.md).
+
+- **App único + App Router** (sem monorepo): o teste é front-end com API pronta; simplicidade favorece a avaliação.
+- **json-server (Opção B)** em vez da Opção A (só leitura): mesmos dados, mas **persiste** os check-ins e exercita o caminho `event_closed`. A camada `lib/api` é isolada — trocar a fonte não toca a UI.
+- **React Query**: server state, **mutações otimistas** (com rollback/invalidação) e cache — base natural para o fluxo de check-in. `retry: 1` para erros surgirem rápido com 1 retry de resiliência.
+- **Design system próprio** (shadcn + tokens em CSS variables): tema claro/escuro, **rebrand** (laranja `#ff7437`, fontes Exo/Saira) sem reescrever componentes. Status e tipo/estado do participante traduzidos (nunca enum cru na UI).
+- **Domínio puro** (`lib/domain/checkin`): regras como funções puras → testáveis e reaproveitadas pela mutação otimista (`planCheckin`).
+- **Overlays responsivos** (`ResponsiveDialog`): modal no desktop, **bottom sheet** no mobile (Radix Dialog + tailwindcss-animate).
+- **Gráficos** com recharts; derivações de dados puras em `lib/event-metrics` (também testáveis).
+
+---
+
+## Diferenciais cobertos
+
+- **Next.js App Router** (file-based routing, server/client components).
+- **Gerenciamento de estado** com React Query (+ mutação otimista).
+- **Debounce** na busca.
+- **Acessibilidade**: foco visível, `aria-label`/`aria-pressed`, navegação por teclado, contraste, `prefers-reduced-motion`.
+- **Componentização** própria (design system + convenção plana `index`/`parts`).
+- **Edge cases**: evento cancelado/zerado (EVT-004), evento encerrado (EVT-002), VIP com reentradas, estados de lista.
+- **Uso de IA documentado** (abaixo).
+
+---
+
+## Testes
+
+- **Vitest** — regras de negócio (`decideCheckin` / `planCheckin`): Normal não repete check-in, VIP entra/sai, evento encerrado bloqueia, recálculo de taxa, presença não recontada.
+- **Playwright (e2e)** — estados da listagem (sem-resultado, erro + tentar novamente) e check-in (confirma → "Dentro" + feedback; bloqueia 2ª tentativa com motivo). Roda contra um **db de teste regenerado** a cada execução (não muta o seed de desenvolvimento).
+
+---
+
+## Melhorias com mais tempo
+
+- Refinar a **credencial** ao design exato do Figma (cartão/boarding pass).
+- **Histórico de check-ins** do participante (timeline) na credencial.
+- **Seletor de status em bottom sheet** no mobile (hoje é um segmentado).
+- Mais cobertura de testes (componentes isolados, acessibilidade automatizada).
+- Paginação/virtualização caso a base de participantes cresça muito.
+- Deploy (Vercel) + CI rodando lint/typecheck/testes.
+
+---
+
+## Como utilizei IA
+
+O desenvolvimento foi assistido por IA num fluxo **spec-as-code com humano no loop**:
+
+1. **Decisão antes de código** — a cada ponto de definição (stack, API, design, regras, testes), as opções e trade-offs eram apresentadas, eu escolhia, e a decisão era **registrada** em `docs/decisions.md` (ADR) antes de implementar.
+2. **Pipeline por fase** — cada fase passou por `brief → research → exploration → plan → todo → validation` (em `docs/tasks/`) antes do código.
+3. **Geração + revisão humana** — a IA gerou a implementação; eu **revisei, ajustei e validei** (QA manual + `lint`/`typecheck`/testes) antes de cada commit. O histórico de commits reflete as fases.
+4. **Ferramentas de apoio** — leitura do design via **Figma (Dev Mode MCP)** para derivar tokens e componentes; padrões reaproveitados de projetos anteriores.
+
+A IA acelerou o boilerplate, a exploração de alternativas e a varredura de edge cases; as **decisões de produto/arquitetura e a revisão** foram minhas.

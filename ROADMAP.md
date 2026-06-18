@@ -14,7 +14,7 @@ Status: ☐ pendente · ◐ em andamento · ☑ concluída.
 | 5 | ☑ Regras + Check-in | `lib/domain` (VIP/Normal/encerrado), mutações otimistas, feedback via toasts | `feat(check-in): regras de negócio e interações` |
 | 6 | ☑ Responsivo + a11y | layout mobile (cards empilhados), ARIA, navegação por teclado, contraste | `feat(ux): responsividade e acessibilidade` |
 | 7 | ☑ Testes | Vitest (regra VIP×Normal) + Playwright (estados, interação de check-in) | `test: regras, estados e check-in` |
-| 8 | ☐ README | instruções, decisões, melhorias futuras, uso de IA | `docs: readme completo de entrega` |
+| 8 | ☑ README | instruções, decisões, melhorias futuras, uso de IA | `docs: readme completo de entrega` |
 
 ## Critérios de avaliação (peso) — referência
 
