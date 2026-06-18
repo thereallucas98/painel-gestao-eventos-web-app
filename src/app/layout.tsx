@@ -1,16 +1,14 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Schibsted_Grotesk } from 'next/font/google'
+import { Exo, Saira } from 'next/font/google'
 import { Toaster } from 'sonner'
 
 import { QueryProvider } from '@/providers/query-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
 
-const schibsted = Schibsted_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-schibsted',
-})
+const saira = Saira({ subsets: ['latin'], variable: '--font-saira' })
+const exo = Exo({ subsets: ['latin'], variable: '--font-exo' })
 
 export const metadata: Metadata = {
   title: 'Painel de Gestão de Eventos',
@@ -24,13 +22,12 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       suppressHydrationWarning
-      className={`${schibsted.variable} h-full`}
+      className={`${saira.variable} ${exo.variable} h-full`}
     >
       <body className="bg-background text-foreground min-h-dvh font-sans antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <QueryProvider>{children}</QueryProvider>

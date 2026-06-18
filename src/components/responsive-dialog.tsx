@@ -50,7 +50,9 @@ export function ResponsiveDialog({
           <div className="bg-border mx-auto h-1 w-12 shrink-0 rounded-full md:hidden" />
 
           <div className="flex items-center justify-between gap-4">
-            <Dialog.Title className="text-xl font-bold">{title}</Dialog.Title>
+            <Dialog.Title className="font-display text-xl font-bold">
+              {title}
+            </Dialog.Title>
             <Dialog.Close
               aria-label="Fechar"
               className="text-muted-foreground hover:text-foreground transition-colors"

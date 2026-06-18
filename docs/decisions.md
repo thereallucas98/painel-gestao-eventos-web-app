@@ -12,6 +12,10 @@ Log das decisões de definição. Formato: contexto → decisão → motivo. Mai
 **Decisão:** código + comentários em inglês; docs externas, commits e copy de UI em PT-BR.
 **Motivo:** regra definida do projeto.
 
+### D-013 · Rebrand laranja + fontes Exo/Saira (supera D-001/D-008)
+**Decisão:** marca passa de lime/dark (Plann.er) para **laranja `#ff7437`**, **light-first**. Paleta do usuário mapeada para o vocabulário shadcn nos dois temas (`globals.css`). Fontes: **Exo** em títulos (`font-display`) + **Saira** no corpo (`font-sans`), variáveis via next/font. Tema default **light** com toggle mantido. **Status "Ativo" = laranja (brand)** (escolha do usuário); "cancelado" vermelho, "encerrado" neutro. **Botões primary** = `#d84a0c` (orange-red) + texto **branco** (AA); o brand `#ff7437` fica nos accents/tints. Extra `--midnight` (#002838) disponível.
+**Motivo:** nova identidade visual do usuário. Supera as cores do D-001/D-008 e a fonte Schibsted.
+
 ### D-012 · Overlays sempre bottom sheet no mobile (incl. selects)
 **Decisão:** no mobile, todo overlay usa **bottom sheet** — modais, e também **selects/seletores** (nunca dropdown nativo). Desktop usa modal/popover. Wrapper único `ResponsiveDialog` decide por breakpoint. Estende D-006.
 **Implementação:** **Radix Dialog responsivo, sem vaul** (padrão do Copa Bolão `prediction-bottom-sheet.tsx`): `bottom-0 rounded-t-2xl slide-in-from-bottom` + grab handle no mobile; `md:` centralizado `zoom-in-95`. Animações via `tailwindcss-animate`. Supersede a menção a vaul na exploration da Fase 1.
