@@ -12,6 +12,11 @@ Log das decisões de definição. Formato: contexto → decisão → motivo. Mai
 **Decisão:** código + comentários em inglês; docs externas, commits e copy de UI em PT-BR.
 **Motivo:** regra definida do projeto.
 
+### D-012 · Overlays sempre bottom sheet no mobile (incl. selects)
+**Decisão:** no mobile, todo overlay usa **bottom sheet** — modais, e também **selects/seletores** (nunca dropdown nativo). Desktop usa modal/popover. Wrapper único `ResponsiveDialog` decide por breakpoint. Estende D-006.
+**Implementação:** **Radix Dialog responsivo, sem vaul** (padrão do Copa Bolão `prediction-bottom-sheet.tsx`): `bottom-0 rounded-t-2xl slide-in-from-bottom` + grab handle no mobile; `md:` centralizado `zoom-in-95`. Animações via `tailwindcss-animate`. Supersede a menção a vaul na exploration da Fase 1.
+**Motivo:** preferência do usuário; reaproveita um padrão já validado, sem dependência extra.
+
 ### D-011 · Componentização plana (index + parts)
 **Decisão:** componente não-trivial vira pasta plana `components/<nome>/` com `index.tsx` (composição/smart) e `parts.tsx` (peças puras + constants); lógica em `use-*.ts` só se crescer. Sem camada `features/`, sem `ui/`/`model/`, sem `index.ts` de re-export. `theme-toggle/` é a referência.
 **Motivo:** separa composição de peças puras sem cerimônia. Uma primeira versão DDD-lite (ui/model/index) foi considerada complexa demais e simplificada.

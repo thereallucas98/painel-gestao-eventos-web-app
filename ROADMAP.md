@@ -8,6 +8,7 @@ Status: ☐ pendente · ◐ em andamento · ☑ concluída.
 | 0 | ☑ Fundação | CLAUDE.md, `docs/foundation`, `docs/decisions.md`, ROADMAP, init git | `chore: fundação do projeto e documentação base` |
 | 1 | ☑ Scaffold | Next app único, Tailwind v4 + tokens Plann.er, shadcn base, providers, tema dark | `chore(scaffold): app next, tailwind e tema base` |
 | 2 | ☑ Camada de dados | `types`, `lib/api`, hooks React Query, setup json-server + `db.json` | `feat(dados): client de api, tipos e hooks` |
+| 2.5 | ◐ UI & Componentes | Analisar frames Figma (Contatos) → componentes shadcn primários/secundários + interface | `feat(ui): componentes base do design` |
 | 3 | ☐ Listagem | lista de eventos, busca (debounce), filtro por status, ordenação por data, estados loading/vazio/erro | `feat(listagem): eventos com busca, filtro e estados` |
 | 4 | ☐ Dashboard | detalhe do evento: 4 cards de métrica, gráfico, tabela de participantes | `feat(dashboard): métricas, gráfico e participantes` |
 | 5 | ☐ Regras + Check-in | `lib/domain` (VIP/Normal/encerrado), mutações otimistas, feedback via toasts | `feat(check-in): regras de negócio e interações` |

@@ -42,6 +42,7 @@ Norte: **simplicidade, experiência, senioridade.** Do básico ao avançado.
 - Layout animations onde agregar (reordenação, expand/collapse, sheet↔modal).
 - Sempre respeitar `prefers-reduced-motion` (degradar para sem animação).
 - Microinterações com feedback imediato; nada de salto/flicker de layout.
+- **Overlays no mobile = bottom sheet** (Radix Dialog responsivo, padrão Copa Bolão, sem vaul), inclusive selects/seletores (nunca dropdown nativo); desktop = modal/popover. Wrapper `ResponsiveDialog` (D-012).
 
 ## Idioma
 
