@@ -5,7 +5,7 @@ Critérios de pronto e roteiro de QA.
 ## Critérios de pronto (DoD)
 
 - [ ] `pnpm test` (Vitest) passa: regras `decideCheckin`/`planCheckin` (Normal 2ª = erro, VIP entra/sai, evento encerrado bloqueia, recálculo de taxa, presença não reconta).
-- [ ] `pnpm test:e2e` (Playwright) passa: **estados** (sem-resultado + erro/retry) e **check-in** (Confirmar → "Dentro" + toast; bloqueado desabilita + motivo).
+- [ ] `pnpm test:e2e` (Playwright) passa: **estados** (sem-resultado + erro/retry) e **check-in** (deslizar p/ confirmar → **modal de feedback** + "Dentro"; bloqueado não mostra o slider, exibe o motivo).
 - [ ] E2E não mutam o `db.json` (mockados onde escrevem).
 - [ ] `pnpm lint` e `pnpm typecheck` limpos.
 

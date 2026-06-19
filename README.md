@@ -56,8 +56,8 @@ pnpm test:e2e                  # Playwright (estados + check-in) — sobe a API/
 ## Funcionalidades
 
 - **Listagem** (`/eventos`): nome, data, local, status, participantes esperados — com **busca por nome (debounce)**, **filtro por status**, **ordenação por data** e estados **loading / vazio / sem-resultado / erro** (com retry). Tabela no desktop, cards no mobile.
-- **Dashboard** (`/eventos/[id]`): 4 cards de métrica (esperados, check-ins, erros, taxa de entrada), **4 gráficos** (entradas acumuladas, ocupação no tempo, comparecimento, sucesso × erro) e a **lista de participantes** com scroll.
-- **Check-in / saída** com **regras de negócio** e **confirmação** (credencial do participante) + feedback (toasts); persiste no json-server (mutação otimista).
+- **Dashboard** (`/eventos/[id]`): 4 cards de métrica (esperados, check-ins, erros, taxa de entrada), **4 gráficos** (entradas acumuladas, ocupação no tempo, comparecimento, sucesso × erro) — cada um com **explicativo (ⓘ)** e **detalhes ampliados (⤢)** — e a **lista de participantes** (rola internamente a partir de 10).
+- **Check-in / saída** com **regras de negócio** e **confirmação por gesto** (deslizar na credencial) + **modal de feedback** animado no mesmo overlay; persiste no json-server (mutação otimista). Erros de rede avisam por toast.
 - **Configurações** (`/configuracoes`): perfil (mock) + seletor de tema.
 
 ---
@@ -115,6 +115,8 @@ docs/                        # decisões (ADR), foundation e tasks por fase
 - **Debounce** na busca.
 - **Acessibilidade**: foco visível, `aria-label`/`aria-pressed`, navegação por teclado, contraste, `prefers-reduced-motion`.
 - **Componentização** própria (design system + convenção plana `index`/`parts`).
+- **Microinterações com propósito**: check-in por **slide-to-confirm** (acessível por teclado) com **feedback no mesmo modal**; **lista animada** (entra/sai) ao filtrar; gráficos com **explicativo (ⓘ)** e **detalhes (⤢)**.
+- **Scrollbar padronizada** (custom, nunca a nativa).
 - **Edge cases**: evento cancelado/zerado (EVT-004), evento encerrado (EVT-002), VIP com reentradas, estados de lista.
 - **Uso de IA documentado** (abaixo).
 

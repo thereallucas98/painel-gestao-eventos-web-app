@@ -2,6 +2,32 @@
 
 Log das decisões de definição. Formato: contexto → decisão → motivo. Mais recente no topo.
 
+## 2026-06-19
+
+### D-020 · Layout: sidebar fixa, scroll só no corpo
+**Decisão:** o shell ocupa a altura da viewport (`h-dvh`, sem scroll de página); só o `main` rola (`overflow-y-auto`, com padding inferior). A sidebar fica parada; no mobile o header é `sticky`. O card de conteúdo é `flex-col`/`flex-1` para crescer com o conteúdo (e `min-w-0` para a tabela rolar internamente sem vazar).
+**Motivo:** preferência do usuário; navegação estável com a marca/menu sempre visível.
+
+### D-019 · Gráficos: explicativo (ⓘ) + detalhes (⤢)
+**Decisão:** cada gráfico tem um **ⓘ** (tooltip no desktop por hover/foco, bottom sheet no mobile) explicando o que mostra e como calcula, e um **⤢** que abre um modal de detalhes (gráfico ampliado à esquerda + tabela/quebra dos dados à direita, proporcional). Tooltips de dados (hover) mantidos onde já existiam.
+**Motivo:** dashboard auto-documentado; métricas ambíguas (taxa, ocupação) ficam claras.
+
+### D-018 · Scrollbar custom padronizada
+**Decisão:** scrollbar fina padronizada globalmente (`globals.css`, webkit + Firefox), thumb em `muted-foreground`/brand no hover — nunca a nativa.
+**Motivo:** consistência visual do design system.
+
+### D-017 · Lista de eventos animada ao filtrar
+**Decisão:** itens entram/saem animados (`AnimatePresence`) conforme o match da busca/filtro. Cards (mobile) com `layout`+`popLayout` (reposição suave); tabela (desktop) só com fade de opacidade (transform em `<tr>` é instável). Com `prefers-reduced-motion`.
+**Motivo:** feedback de mudança de resultado sem "pulos".
+
+### D-016 · Feedback do check-in no mesmo modal (supera "toast" da Fase 5)
+**Decisão:** o sucesso do check-in é mostrado **dentro da própria credencial**, que transiciona de "dados" → "sucesso" (cross-fade, tamanho fixo, sem fechar/reabrir nem scroll). Toast fica só para **erro de rede**.
+**Motivo:** transição entre dois modais era ruim; um modal só, com handoff suave, é mais premium.
+
+### D-015 · Check-in por slide-to-confirm (supera o botão do D-014)
+**Decisão:** confirmar o check-in é um **deslizar até o fim** (o tick se desenha conforme arrasta), substituindo o botão "Confirmar". Acessível: o knob é `<button>` com `aria-label` e **Enter/Espaço** também confirma. Regra bloqueada → sem slider, só o motivo. Com `prefers-reduced-motion`.
+**Motivo:** gesto deliberado evita check-in acidental e reforça o diferencial de UX.
+
 ## 2026-06-18
 
 ### D-010 · Biblioteca de animação — motion + tailwindcss-animate
