@@ -12,9 +12,14 @@ test.describe('check-in', () => {
 
     const dialog = page.getByRole('dialog')
     await expect(dialog).toBeVisible()
-    await dialog.getByRole('button', { name: 'Confirmar check-in' }).click()
+    await dialog
+      .getByRole('button', { name: 'Deslize para confirmar check-in' })
+      .press('Enter')
 
-    await expect(page.getByText('Entrada registrada.')).toBeVisible()
+    // Feedback de sucesso vem por modal (não toast).
+    await expect(page.getByText('Check-in confirmado')).toBeVisible()
+    await page.getByRole('button', { name: 'Concluir' }).click()
+
     await expect(
       page
         .getByRole('row')
@@ -34,7 +39,7 @@ test.describe('check-in', () => {
       dialog.getByText('Participante já realizou check-in'),
     ).toBeVisible()
     await expect(
-      dialog.getByRole('button', { name: 'Confirmar check-in' }),
-    ).toBeDisabled()
+      dialog.getByRole('button', { name: /Deslize para confirmar/ }),
+    ).toHaveCount(0)
   })
 })

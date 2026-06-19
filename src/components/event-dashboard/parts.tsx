@@ -200,11 +200,11 @@ export function ParticipantsPanel({
     )
   }
 
-  // Past the threshold, cap the height and scroll (custom scrollbar).
+  // Acima do limite, fixa a altura (~10 linhas) e rola internamente.
   const scrolls = participants.length > PARTICIPANTS_SCROLL_THRESHOLD
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex min-w-0 flex-col gap-3">
       <h2 className="font-display text-lg font-bold">
         Participantes ({participants.length})
       </h2>

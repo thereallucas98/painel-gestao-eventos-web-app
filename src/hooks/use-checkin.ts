@@ -87,19 +87,15 @@ export function useCheckin(eventId: string) {
     },
 
     onSuccess: (plan) => {
+      // Sucesso é confirmado por um modal de feedback (ver EventDashboard);
+      // aqui só sinalizamos a falha de regra (caminho de segurança).
       if (!plan.decision.allowed) {
         toast.error(
           plan.checkin.errorReason
             ? checkinErrorLabel[plan.checkin.errorReason]
             : 'Ação não permitida.',
         )
-        return
       }
-      toast.success(
-        plan.checkin.action === 'entry'
-          ? 'Entrada registrada.'
-          : 'Saída registrada.',
-      )
     },
 
     onSettled: () => {

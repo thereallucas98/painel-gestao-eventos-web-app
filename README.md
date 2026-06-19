@@ -134,17 +134,16 @@ docs/                        # decisões (ADR), foundation e tasks por fase
 - **Seletor de status em bottom sheet** no mobile (hoje é um segmentado).
 - Mais cobertura de testes (componentes isolados, acessibilidade automatizada).
 - Paginação/virtualização caso a base de participantes cresça muito.
-- Deploy (Vercel) + CI rodando lint/typecheck/testes.
 
 ---
 
 ## Como utilizei IA
 
-O desenvolvimento foi assistido por IA num fluxo **spec-as-code com humano no loop**:
+Usei IA como **par de programação**, mantendo as decisões e a revisão sob meu controle:
 
-1. **Decisão antes de código** — a cada ponto de definição (stack, API, design, regras, testes), as opções e trade-offs eram apresentadas, eu escolhia, e a decisão era **registrada** em `docs/decisions.md` (ADR) antes de implementar.
-2. **Pipeline por fase** — cada fase passou por `brief → research → exploration → plan → todo → validation` (em `docs/tasks/`) antes do código.
-3. **Geração + revisão humana** — a IA gerou a implementação; eu **revisei, ajustei e validei** (QA manual + `lint`/`typecheck`/testes) antes de cada commit. O histórico de commits reflete as fases.
-4. **Ferramentas de apoio** — leitura do design via **Figma (Dev Mode MCP)** para derivar tokens e componentes; padrões reaproveitados de projetos anteriores.
+- **Decisão antes do código.** Em cada ponto de definição (stack, API, design, regras de negócio, testes), avaliei as opções e os trade-offs e registrei a escolha em [`docs/decisions.md`](docs/decisions.md) antes de implementar.
+- **Trabalho por fases.** Cada etapa seguiu um pipeline curto — `brief → research → exploration → plan → todo → validation` (em `docs/tasks/`) — antes de gerar código; o histórico de commits reflete essas fases.
+- **Revisão humana em todo commit.** A IA acelerou o boilerplate, a exploração de alternativas e a varredura de edge cases; eu revisei, ajustei e validei cada entrega (QA manual + `lint`/`typecheck`/testes) antes de commitar.
+- **Apoio de ferramentas.** Leitura do design direto do Figma (Dev Mode MCP) para derivar tokens e componentes.
 
-A IA acelerou o boilerplate, a exploração de alternativas e a varredura de edge cases; as **decisões de produto/arquitetura e a revisão** foram minhas.
+As **decisões de arquitetura/produto e a qualidade final foram minhas** — a IA foi a ferramenta para chegar lá com mais velocidade.

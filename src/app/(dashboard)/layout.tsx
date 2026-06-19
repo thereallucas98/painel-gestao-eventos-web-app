@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <AppShell sidebar={sidebar}>
       {/* Mobile top bar (sidebar is desktop-only): same nav, horizontal. */}
-      <header className="border-border flex w-full items-center justify-between gap-2 border-b px-4 py-2 md:hidden">
+      <header className="border-border bg-background sticky top-0 z-10 flex w-full items-center justify-between gap-2 border-b px-4 py-2 md:hidden">
         <Logo />
         <nav className="flex items-center gap-2">
           <SidebarNav />
@@ -19,8 +19,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       </header>
 
       {/* Content card — distinct surface floating on the page background. */}
-      <div className="flex flex-1 p-2 md:p-4">
-        <div className="bg-card border-border flex-1 rounded-3xl border p-5 md:p-8">
+      <div className="flex flex-col p-2 md:min-h-full md:p-4">
+        <div className="bg-card border-border min-w-0 flex-1 rounded-3xl border p-5 md:p-8">
           {children}
         </div>
       </div>

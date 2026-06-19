@@ -37,7 +37,7 @@ export function EventDashboard({ eventId }: { eventId: string }) {
   const eventQuery = useEvent(eventId)
   const participantsQuery = useParticipants(eventId)
   const checkinsQuery = useCheckins(eventId)
-  const { checkin, pendingId } = useCheckin(eventId)
+  const { checkin } = useCheckin(eventId)
   const [selected, setSelected] = useState<Participant | null>(null)
 
   if (eventQuery.isLoading) return <DashboardSkeleton />
@@ -93,7 +93,11 @@ export function EventDashboard({ eventId }: { eventId: string }) {
       <div className="grid gap-4 lg:grid-cols-2">
         <EntriesAreaChart data={cumulativeEntries(checkins)} />
         <OccupancyLineChart data={occupancyOverTime(checkins)} />
-        <AttendanceRadial ratePct={att.ratePct} />
+        <AttendanceRadial
+          checkin={att.checkin}
+          expected={att.expected}
+          ratePct={att.ratePct}
+        />
         <SuccessErrorDonut success={io.success} error={io.error} />
       </div>
 
@@ -102,13 +106,11 @@ export function EventDashboard({ eventId }: { eventId: string }) {
       <ParticipantCredentialDialog
         event={event}
         participant={selected}
-        pending={pendingId === selected?.id}
         onOpenChange={(open) => {
           if (!open) setSelected(null)
         }}
         onConfirm={(action) => {
           if (selected) checkin(event, selected, action)
-          setSelected(null)
         }}
       />
     </div>

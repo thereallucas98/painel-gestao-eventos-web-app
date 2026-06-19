@@ -1,3 +1,5 @@
+'use client'
+
 import {
   ArrowDown,
   ArrowUp,
@@ -7,6 +9,7 @@ import {
   TriangleAlert,
   Users,
 } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
@@ -101,7 +104,10 @@ function VerButton({ id, className }: { id: string; className?: string }) {
   )
 }
 
+const MotionTableRow = motion.create(TableRow)
+
 export function EventTable({ events }: { events: Event[] }) {
+  const reduce = useReducedMotion()
   return (
     <Table>
       <TableHeader>
@@ -115,60 +121,76 @@ export function EventTable({ events }: { events: Event[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {events.map((event) => (
-          <TableRow key={event.id}>
-            <TableCell className="font-semibold">{event.name}</TableCell>
-            <TableCell className="text-muted-foreground whitespace-nowrap">
-              {formatEventDate(event.date)}
-            </TableCell>
-            <TableCell className="text-muted-foreground">
-              {event.location}
-            </TableCell>
-            <TableCell>
-              <StatusBadge status={event.status} />
-            </TableCell>
-            <TableCell className="text-right tabular-nums">
-              {event.expectedCount}
-            </TableCell>
-            <TableCell className="text-right">
-              <VerButton id={event.id} />
-            </TableCell>
-          </TableRow>
-        ))}
+        <AnimatePresence initial={false}>
+          {events.map((event) => (
+            <MotionTableRow
+              key={event.id}
+              initial={reduce ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduce ? 0 : 0.2, ease: 'easeOut' }}
+            >
+              <TableCell className="font-semibold">{event.name}</TableCell>
+              <TableCell className="text-muted-foreground whitespace-nowrap">
+                {formatEventDate(event.date)}
+              </TableCell>
+              <TableCell className="text-muted-foreground">
+                {event.location}
+              </TableCell>
+              <TableCell>
+                <StatusBadge status={event.status} />
+              </TableCell>
+              <TableCell className="text-right tabular-nums">
+                {event.expectedCount}
+              </TableCell>
+              <TableCell className="text-right">
+                <VerButton id={event.id} />
+              </TableCell>
+            </MotionTableRow>
+          ))}
+        </AnimatePresence>
       </TableBody>
     </Table>
   )
 }
 
 export function EventCards({ events }: { events: Event[] }) {
+  const reduce = useReducedMotion()
   return (
     <div className="flex flex-col gap-3">
-      {events.map((event) => (
-        <div
-          key={event.id}
-          className="bg-secondary border-border flex flex-col gap-3 rounded-xl border p-4"
-        >
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="font-semibold">{event.name}</h3>
-            <StatusBadge status={event.status} />
-          </div>
-          <dl className="text-muted-foreground flex flex-col gap-1.5 text-sm">
-            <div className="flex items-center gap-2">
-              <CalendarDays className="size-4 shrink-0" />
-              {formatEventDate(event.date)}
+      <AnimatePresence mode="popLayout" initial={false}>
+        {events.map((event) => (
+          <motion.div
+            key={event.id}
+            layout={!reduce}
+            initial={reduce ? false : { opacity: 0, scale: 0.97, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97, y: -8 }}
+            transition={{ duration: reduce ? 0 : 0.2, ease: 'easeOut' }}
+            className="bg-secondary border-border flex flex-col gap-3 rounded-xl border p-4"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <h3 className="font-semibold">{event.name}</h3>
+              <StatusBadge status={event.status} />
             </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="size-4 shrink-0" />
-              {event.location}
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="size-4 shrink-0" />
-              {event.expectedCount} esperados
-            </div>
-          </dl>
-          <VerButton id={event.id} className="w-full" />
-        </div>
-      ))}
+            <dl className="text-muted-foreground flex flex-col gap-1.5 text-sm">
+              <div className="flex items-center gap-2">
+                <CalendarDays className="size-4 shrink-0" />
+                {formatEventDate(event.date)}
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="size-4 shrink-0" />
+                {event.location}
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="size-4 shrink-0" />
+                {event.expectedCount} esperados
+              </div>
+            </dl>
+            <VerButton id={event.id} className="w-full" />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   )
 }

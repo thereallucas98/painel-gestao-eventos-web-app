@@ -41,7 +41,7 @@ export function ResponsiveDialog({
             'bg-background text-foreground border-border fixed z-50 flex max-h-[90vh] w-full flex-col gap-4 border p-4 shadow-2xl',
             'inset-x-0 bottom-0 rounded-t-2xl pb-[max(1rem,env(safe-area-inset-bottom))]',
             'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-            'md:inset-x-auto md:top-1/2 md:bottom-auto md:left-1/2 md:max-w-md md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl md:pb-4',
+            'md:inset-x-auto md:top-1/2 md:bottom-auto md:left-1/2 md:max-w-lg md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl md:pb-4',
             'md:data-[state=closed]:zoom-out-95 md:data-[state=open]:zoom-in-95',
             className,
           )}
