@@ -227,16 +227,16 @@
       "event_id": "EVT-003",
       "name": "Fernanda Ferreira",
       "type": "vip",
-      "status": "outside",
-      "checkin_count": 4
+      "status": "inside",
+      "checkin_count": 11
     },
     {
       "id": "EVT-003-P002",
       "event_id": "EVT-003",
       "name": "Vinicius Silva",
       "type": "vip",
-      "status": "outside",
-      "checkin_count": 2
+      "status": "inside",
+      "checkin_count": 3
     },
     {
       "id": "EVT-003-P003",
@@ -1321,6 +1321,78 @@
       "action": "entry",
       "error_reason": null,
       "id": "F7b4GUq"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T11:36:30.284Z",
+      "success": true,
+      "action": "entry",
+      "error_reason": null,
+      "id": "DosqHLH"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T11:41:34.025Z",
+      "success": true,
+      "action": "exit",
+      "error_reason": null,
+      "id": "kPyDzgo"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T11:41:42.893Z",
+      "success": true,
+      "action": "entry",
+      "error_reason": null,
+      "id": "tQN87yU"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P002",
+      "timestamp": "2026-06-19T11:42:09.879Z",
+      "success": true,
+      "action": "entry",
+      "error_reason": null,
+      "id": "reuBhZJ"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T11:42:15.963Z",
+      "success": true,
+      "action": "exit",
+      "error_reason": null,
+      "id": "zIlcf5Y"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T12:04:46.338Z",
+      "success": true,
+      "action": "entry",
+      "error_reason": null,
+      "id": "peOyKLI"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T12:10:28.959Z",
+      "success": true,
+      "action": "exit",
+      "error_reason": null,
+      "id": "IU_hk-_"
+    },
+    {
+      "event_id": "EVT-003",
+      "participant_id": "EVT-003-P001",
+      "timestamp": "2026-06-19T12:16:03.890Z",
+      "success": true,
+      "action": "entry",
+      "error_reason": null,
+      "id": "POi8k__"
     }
   ]
 }
